@@ -1,0 +1,72 @@
+﻿<Window x:Class="SecureNotesWpfClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SecureNotesWpfClient"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="399.111" Width="589">
+
+
+    <DockPanel LastChildFill="True">
+
+        <Grid DockPanel.Dock="Top">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <DockPanel Grid.Row="0">
+                <Menu x:Name="menu" Width="Auto" Height="20" Background="#FFA9D1F4" DockPanel.Dock="Top">
+                    <MenuItem Header="_File">
+                        <MenuItem x:Name="Options" Header="_Options" HorizontalAlignment="Left" Width="140" />
+                        <MenuItem x:Name="AppExit" Header="E_xit" HorizontalAlignment="Left" Width="140" Click="AppExit_Click" />
+                    </MenuItem>
+                    <MenuItem x:Name="toolsMenuItem" Header="_Tools">
+                        <MenuItem x:Name="About" Header="_About" HorizontalAlignment="Left" Width="140" />
+                    </MenuItem>
+                    <MenuItem x:Name="optionsMenuItem" Header="_Options">
+                        <MenuItem x:Name="test1MenuItem" Header="Test 1" HorizontalAlignment="Left" Width="auto" Click="test1MenuItem_Click" />
+                        <MenuItem x:Name="test2MenuItem" Header="Test 2" HorizontalAlignment="Left" Width="auto" Click="test2MenuItem_Click" />
+                        <MenuItem x:Name="test3MenuItem" Header="Test 3" HorizontalAlignment="Left" Width="auto" />
+                    </MenuItem>
+                </Menu>
+            </DockPanel>
+
+            <DockPanel Grid.Row="1" LastChildFill="True" Background="{DynamicResource {x:Static SystemColors.MenuBrushKey}}">
+                <StackPanel Orientation="Horizontal" Height="auto" DockPanel.Dock="Right">
+                    <Label VerticalAlignment="Center">Find:</Label>
+                    <TextBox x:Name="findTextBox" Width="180" Margin="4,2" VerticalAlignment="Center" >test</TextBox>
+                    <Button x:Name="findNextButton" Height="28" Width="28" Margin="4" VerticalAlignment="Center">T1</Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Height="auto" DockPanel.Dock="Left">
+                    <Button x:Name="OpenNotebookButton" Height="28" Width="28" Margin="4" Click="Button_Click_1">NB</Button>
+                    <Button x:Name="SyncNotebookButton"  Height="28" Width="28" Margin="4" Click="Button_Click_2">Sync</Button>
+                    <Button x:Name="AddNoteButton"  Height="28" Width="28" Margin="4" Click="AddNoteButton_Click">Add</Button>
+                </StackPanel>
+            </DockPanel>
+ 
+        </Grid>
+
+        <StackPanel DockPanel.Dock="Bottom">
+            <Label Content="Status Bar" />
+        </StackPanel>
+
+        <TabControl x:Name="MainTabControl" SelectedIndex="0">
+            <TabItem x:Name="NoteListTab" Header="Notes" Visibility="Visible" Margin="-2,-2,-2,0" HorizontalAlignment="Right" Width="47">
+                 <local:NoteListControl x:Name="notesList" Margin="2,0,2,2" VerticalAlignment="Stretch"/>
+            </TabItem>
+            <TabItem x:Name="MergeTab" Header="Merge" Visibility="Visible">
+                <local:NoteMergeControl x:Name="noteMergeControl" Margin="2,0,2,2" VerticalAlignment="Stretch"/>
+            </TabItem>
+        </TabControl>
+
+
+    </DockPanel>
+
+
+</Window>
