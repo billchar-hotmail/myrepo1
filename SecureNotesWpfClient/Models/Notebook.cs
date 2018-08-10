@@ -13,14 +13,14 @@ namespace SecureNotesWpfClient.Models
         public Notebook()
         {
             Data = new NotebookData();
-            Notes = new ObservableCollection<Note>();
+            Notes = new List<Note>();
         }
 
         public string Id { get; set; }
         public string Name { get; set; }
         public string ServerId { get; set; }
         public NotebookData Data { get; set; }
-        public ObservableCollection<Note> Notes { get; set; }
+        public List<Note> Notes { get; set; }
 
     }
 }

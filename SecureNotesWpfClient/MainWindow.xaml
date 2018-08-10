@@ -58,10 +58,15 @@
 
         <TabControl x:Name="MainTabControl" SelectedIndex="0">
             <TabItem x:Name="NoteListTab" Header="Notes" Visibility="Visible" Margin="-2,-2,-2,0" HorizontalAlignment="Right" Width="47">
-                 <local:NoteListControl x:Name="notesList" Margin="2,0,2,2" VerticalAlignment="Stretch"/>
+                <local:NoteListControl x:Name="notesList" Margin="2,0,2,2" VerticalAlignment="Stretch"
+                                       HistoryButtonClicked = "NoteList_HistoryButtonClick" 
+                                       />
             </TabItem>
             <TabItem x:Name="MergeTab" Header="Merge" Visibility="Visible">
-                <local:NoteMergeControl x:Name="noteMergeControl" Margin="2,0,2,2" VerticalAlignment="Stretch"/>
+                <local:NoteMergeControl x:Name="noteMergeControl" Margin="2,0,2,2" VerticalAlignment="Stretch"
+                                        SaveButtonClicked = "NoteMerge_SaveButtonClick"
+                                        CancelButtonClicked = "NoteMerge_CancelButtonClick"
+                                        />
             </TabItem>
         </TabControl>
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,9 @@ namespace SecureNotesWpfClient
     {
         private ICollection<Note> _notes;
 
+        [Browsable(true)]
+        public event EventHandler HistoryButtonClicked;
+
         public NoteListControl()
         {
             InitializeComponent();
@@ -34,10 +38,7 @@ namespace SecureNotesWpfClient
 
         public ICollection<Note> Notes
         {
-            get
-            {
-                return _notes; 
-            }
+            get { return _notes; }
             set
             {
                 _notes = value;
@@ -45,13 +46,29 @@ namespace SecureNotesWpfClient
             }
         }
 
+        public Note SelectedNote
+        {
+            get { return (Note)lstViewNotes.SelectedItem; }
+            set { SelectNoteId(value?.Id); }
+        }
+
         public bool SelectNoteId(string noteId)
         {
             var note = _notes.Where(x => x.Id == noteId).FirstOrDefault();
             if (note == null)
                 return false;
-            lstViewNotes.SelectedItems.Add(note);
+            lstViewNotes.SelectedItem = note;
             return true;
+        }
+
+        public void UpdateNote(Note note)
+        {
+            var item = _notes.Where(x => x.Id == note.Id).FirstOrDefault();
+            if (item != null)
+            {
+                item.Data.Title = note.Data.Title;
+                item.Data.Body = note.Data.Body;
+            }
         }
 
         private void ButtonSearch_Click(object sender, RoutedEventArgs e)
@@ -83,7 +100,7 @@ namespace SecureNotesWpfClient
 
         private void NoteEditor_HistoryButtonClick(object sender, EventArgs e)
         {
-            //noteEditorControl.IsInEditMode = true;
+            HistoryButtonClicked?.Invoke(this, EventArgs.Empty);
         }
 
         private void NoteEditor_EditButtonClick(object sender, EventArgs e)
@@ -106,6 +123,7 @@ namespace SecureNotesWpfClient
         private void NoteEditor_CancelButtonClick(object sender, EventArgs e)
         {
             noteEditorControl.IsInEditMode = false;
+
         }
 
         public void AddNote()

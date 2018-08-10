@@ -16,6 +16,21 @@ namespace SecureNotesWpfClient.Models
             Data = new NoteData();
         }
 
+        public Note(Note note)
+        {
+            Id = note.Id;
+            SyncStatus = note.SyncStatus;
+            MergeStatus = note.MergeStatus;
+            CurrentVersionNum = note.CurrentVersionNum;
+            CreatedUTC = note.CreatedUTC;
+            ModifiedUTC = note.ModifiedUTC;
+            Data = new NoteData()
+            {
+                Title = note.Data.Title,
+                Body = note.Data.Body
+            };
+        }
+
         public string Id { get; set; }
         public NoteSyncStatus SyncStatus { get; set; }
         public NoteMergeStatus MergeStatus { get; set; }
@@ -33,5 +48,6 @@ namespace SecureNotesWpfClient.Models
             get { return TimeZoneHelper.ConvertFromUTC(ModifiedUTC, TimeZoneHelper.DefaultTimeZoneId); }
             set { ModifiedUTC = TimeZoneHelper.ConvertToUTC(value, TimeZoneHelper.DefaultTimeZoneId); }
         }
+
     }
 }

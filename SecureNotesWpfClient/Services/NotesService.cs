@@ -80,6 +80,37 @@ namespace SecureNotesWpfClient.Services
             return list;
         }
 
+        protected List<NoteVersion> GetNoteVersions(string noteId, SQLiteConnection conn)
+        {
+            var list = new List<NoteVersion>();
+            var sql = "SELECT v.note_id, v.version_num, v.created_utc, v.data " +
+                      "FROM NoteVersion v " + 
+                      "WHERE v.note_id == @note_id " +
+                      "ORDER BY created_utc";
+            var cmd = new SQLiteCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@note_id", noteId);
+            var reader = cmd.ExecuteReader();
+            try
+            {
+                while (reader.Read())
+                {
+                    var note = new NoteVersion
+                    {
+                        NoteId = reader.GetString(0),
+                        VersionNum = reader.GetInt32(1),
+                        CreatedUTC = reader.GetDateTime(2)
+                    };
+                    note.Data.AsString = reader.GetString(3);
+                    list.Add(note);
+                }
+            }
+            finally
+            {
+                reader.Close();
+            }
+            return list;
+        }
+
         protected void LoadNotebook(string notebookId, Notebook notebook, SQLiteConnection conn)
         {
             var sql = "SELECT id, name, server_id, data " +
@@ -124,6 +155,23 @@ namespace SecureNotesWpfClient.Services
                 conn.Close();
             }
             return notebook;
+        }
+
+        public List<NoteVersion> GetNoteHistory(string noteId)
+        {
+            var history = new List<NoteVersion>();
+            var conn = new SQLiteConnection(AppConfig.ConnectionString);
+            conn.Open();
+            try
+            {
+                history.AddRange(GetNoteVersions(noteId, conn));
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return history;
+
         }
 
 

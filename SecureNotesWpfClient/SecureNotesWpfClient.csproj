@@ -125,6 +125,7 @@
     <Compile Include="Helpers\TimeZoneHelper.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Notebook.cs" />
+    <Compile Include="Models\NoteVersion.cs" />
     <Compile Include="NoteEditorControl.xaml.cs">
       <DependentUpon>NoteEditorControl.xaml</DependentUpon>
     </Compile>

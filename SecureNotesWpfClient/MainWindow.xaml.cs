@@ -26,14 +26,17 @@ namespace SecureNotesWpfClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        private NotesService _notesService;
+
         public Notebook CurrentNotebook;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            var notesService = new NotesService();
-            CurrentNotebook = notesService.GetNotebook("1");
+            _notesService = new NotesService();
+
+            CurrentNotebook = _notesService.GetNotebook("1");
             //notesList.DataContext = CurrentNotebook.Notes;
             notesList.Notes = CurrentNotebook.Notes;
         }
@@ -158,6 +161,31 @@ namespace SecureNotesWpfClient
         {
             notesList.AddNote();
         }
+
+
+        private void NoteList_HistoryButtonClick(object sender, EventArgs e)
+        {
+            var note = notesList.SelectedNote;
+            if (note != null)
+            {
+                noteMergeControl.Note = note;
+                MainTabControl.SelectedIndex = 1;
+            }
+
+            //HistoryButtonClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void NoteMerge_SaveButtonClick(object sender, EventArgs e)
+        {
+            var note = noteMergeControl.Note;
+            notesList.UpdateNote(note);
+            MainTabControl.SelectedIndex = 0;
+        }
+        private void NoteMerge_CancelButtonClick(object sender, EventArgs e)
+        {
+            MainTabControl.SelectedIndex = 0;
+        }
+
     }
 
 }
