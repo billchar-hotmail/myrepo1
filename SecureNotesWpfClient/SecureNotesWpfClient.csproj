@@ -132,6 +132,9 @@
     <Compile Include="NoteHistoryControl.xaml.cs">
       <DependentUpon>NoteHistoryControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NotebookEditControl.xaml.cs">
+      <DependentUpon>NotebookEditControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NoteListControl.xaml.cs">
       <DependentUpon>NoteListControl.xaml</DependentUpon>
     </Compile>
@@ -165,6 +168,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NoteHistoryControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NotebookEditControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

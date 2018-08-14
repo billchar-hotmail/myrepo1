@@ -56,17 +56,12 @@
             <Label Content="Status Bar" />
         </StackPanel>
 
-        <TabControl x:Name="MainTabControl" SelectedIndex="0">
-            <TabItem x:Name="NoteListTab" Header="Notes" Visibility="Visible" Margin="-2,-2,-2,0" HorizontalAlignment="Right" Width="47">
-                <local:NoteListControl x:Name="notesList" Margin="2,0,2,2" VerticalAlignment="Stretch"
-                                       HistoryButtonClicked = "NoteList_HistoryButtonClick" 
-                                       />
+        <TabControl x:Name="mainTabControl" SelectedIndex="0">
+            <TabItem x:Name="notebookTab" Header="Notes" Visibility="Visible" Margin="-2,-2,-2,0" HorizontalAlignment="Right" Width="47">
+                <local:NotebookEditControl x:Name="notebookEditControl" Margin="2,0,2,2" VerticalAlignment="Stretch" />
             </TabItem>
-            <TabItem x:Name="MergeTab" Header="Merge" Visibility="Visible">
-                <local:NoteMergeControl x:Name="noteMergeControl" Margin="2,0,2,2" VerticalAlignment="Stretch"
-                                        SaveButtonClicked = "NoteMerge_SaveButtonClick"
-                                        CancelButtonClicked = "NoteMerge_CancelButtonClick"
-                                        />
+            <TabItem x:Name="extraTab" Header="Extra" Visibility="Visible">
+                <Label Content="Select a tab."></Label>
             </TabItem>
         </TabControl>
 

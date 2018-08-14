@@ -25,6 +25,11 @@ namespace SecureNotesWpfClient
     {
         private NotesService _notesService;
         private List<NoteVersion> _noteHistory;
+
+        public IEnumerable<NoteVersion> Notes
+        {
+            get { return _noteHistory; }
+        }
         
         public NoteHistoryControl()
         {
@@ -34,7 +39,7 @@ namespace SecureNotesWpfClient
             //this.DataContext = this;
         }
 
-        public void LoadNoteId(string noteId)
+        public int LoadNoteId(string noteId)
         {
             _noteHistory = _notesService.GetNoteHistory(noteId);
             versionComboBox.ItemsSource = _noteHistory;
@@ -64,6 +69,7 @@ namespace SecureNotesWpfClient
             });
 
             versionComboBox.SelectedIndex = 0;
+            return _noteHistory.Count;
         }
 
         protected void LoadText(int index)

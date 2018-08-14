@@ -4,22 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SecureNotesWpfClient"
-             mc:Ignorable="d" d:DesignWidth="607.159" d:DesignHeight="256">
-
-    <Grid x:Name="grdViewNotes">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="280"/>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
 
         <ListView x:Name="lstViewNotes" ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.Column="0" SelectionChanged="lstViewNotes_SelectionChanged">
-            <!--MaxHeight="{Binding ElementName=grdViewNotes, Path=ActualHeight}">-->
-            <!--MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}">-->
-
             <ListView.View>
                 <GridView x:Name="grdNotes">
                     <GridViewColumn Header="Title"  DisplayMemberBinding="{Binding Data.Title}" Width="80"/>
@@ -30,21 +19,6 @@
             </ListView.View>
         </ListView>
 
-        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
-
-        <Border Grid.Column="2" BorderThickness="1" BorderBrush="Black">
-            <local:NoteEditorControl x:Name="noteEditorControl" 
-                                     HistoryButtonClicked = "NoteEditor_HistoryButtonClick" 
-                                     EditButtonClicked="NoteEditor_EditButtonClick"  
-                                     SaveButtonClicked="NoteEditor_SaveButtonClick"
-                                     CancelButtonClicked="NoteEditor_CancelButtonClick"
-                                     />
-        </Border>
-
-
-
 
     </Grid>
-
-
 </UserControl>

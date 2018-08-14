@@ -25,8 +25,6 @@ namespace SecureNotesWpfClient
         private Note _externalNote;
         private Note _internalNote;
         private bool _inEditMode;
-        private bool _showEditButton;
-        private bool _showHistoryButton;
 
         public Note Note
         {
@@ -40,27 +38,6 @@ namespace SecureNotesWpfClient
         public bool IsInEditMode
         {
             get { return _inEditMode; }
-            set { SetEditMode(value); }
-        }
-
-        public bool ShowEditButton
-        {
-            get { return _showEditButton; }
-            set
-            {
-                editButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
-                _showEditButton = value;
-            }
-        }
-
-        public bool ShowHistoryButton
-        {
-            get { return _showHistoryButton; }
-            set
-            {
-                historyButton.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
-                _showHistoryButton = value;
-            }
         }
 
         [Browsable(true)]
@@ -76,34 +53,31 @@ namespace SecureNotesWpfClient
             _inEditMode = false;
             _externalNote = new Note();
             _internalNote = new Note();
-            _showEditButton = editButton.Visibility == Visibility.Visible;
-            _showHistoryButton = historyButton.Visibility == Visibility.Visible;
-
             noteEditGrid.DataContext = _internalNote;
         }
 
-        protected void SetEditMode(bool enabled)
+        public void SetViewMode(bool enableEdit, bool enableHistory)
         {
-            if (enabled)
-            {
-                noteTitleTextBox.IsReadOnly = false;
-                noteBodyTextBox.IsReadOnly = false;
-                editButton.Visibility = Visibility.Collapsed;
-                historyButton.Visibility = Visibility.Collapsed;
-                saveButton.Visibility = Visibility.Visible;
-                cancelButton.Visibility = Visibility.Visible;
-                _inEditMode = true;
-            }
-            else
-            {
-                noteTitleTextBox.IsReadOnly = true;
-                noteBodyTextBox.IsReadOnly = true;
-                editButton.Visibility = _showEditButton ? Visibility.Visible : Visibility.Collapsed;
-                historyButton.Visibility = _showHistoryButton ? Visibility.Visible : Visibility.Collapsed;
-                saveButton.Visibility = Visibility.Collapsed;
-                cancelButton.Visibility = Visibility.Collapsed;
-                _inEditMode = false;
-            }
+            noteTitleTextBox.IsReadOnly = true;
+            noteBodyTextBox.IsReadOnly = true;
+            editButton.Visibility = Visibility.Visible;
+            editButton.IsEnabled = enableEdit;
+            historyButton.Visibility = Visibility.Visible;
+            historyButton.IsEnabled = enableHistory;
+            saveButton.Visibility = Visibility.Collapsed;
+            cancelButton.Visibility = Visibility.Collapsed;
+            _inEditMode = false;
+        }
+
+        public void SetEditMode()
+        {
+            noteTitleTextBox.IsReadOnly = false;
+            noteBodyTextBox.IsReadOnly = false;
+            editButton.Visibility = Visibility.Collapsed;
+            historyButton.Visibility = Visibility.Collapsed;
+            saveButton.Visibility = Visibility.Visible;
+            cancelButton.Visibility = Visibility.Visible;
+            _inEditMode = true;
         }
 
         protected void CopyNote(Note source, Note dest)

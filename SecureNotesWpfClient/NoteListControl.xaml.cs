@@ -1,5 +1,6 @@
 ﻿using SecureNotesWpfClient.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -25,8 +26,10 @@ namespace SecureNotesWpfClient
     {
         private ICollection<Note> _notes;
 
+        public delegate void NoteSelectionChangedHandler(object sender, ICollection<Note> selectedNotes);
+
         [Browsable(true)]
-        public event EventHandler HistoryButtonClicked;
+        public event NoteSelectionChangedHandler NoteSelectionChanged;
 
         public NoteListControl()
         {
@@ -52,13 +55,19 @@ namespace SecureNotesWpfClient
             set { SelectNoteId(value?.Id); }
         }
 
-        public bool SelectNoteId(string noteId)
+        public void SelectNoteId(string noteId)
         {
             var note = _notes.Where(x => x.Id == noteId).FirstOrDefault();
             if (note == null)
-                return false;
-            lstViewNotes.SelectedItem = note;
-            return true;
+                lstViewNotes.UnselectAll();
+            else
+                lstViewNotes.SelectedItem = note;
+        }
+
+        public void AddNote(Note note)
+        {
+            _notes.Add(note);
+            SelectNoteId(note.Id);
         }
 
         public void UpdateNote(Note note)
@@ -66,78 +75,28 @@ namespace SecureNotesWpfClient
             var item = _notes.Where(x => x.Id == note.Id).FirstOrDefault();
             if (item != null)
             {
+                item.SyncStatus = note.SyncStatus;
+                item.MergeStatus = note.MergeStatus;
+                item.CurrentVersionNum = note.CurrentVersionNum;
+                item.CreatedUTC = note.CreatedUTC;
+                item.ModifiedUTC = note.ModifiedUTC;
                 item.Data.Title = note.Data.Title;
                 item.Data.Body = note.Data.Body;
             }
         }
 
-        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void lstViewNotes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var items = lstViewNotes.SelectedItems;
-            if (items.Count == 1)
+            if (NoteSelectionChanged != null)
             {
-                noteEditorControl.Note = (Note)items[0];
-                noteEditorControl.ShowEditButton = true;
-                noteEditorControl.ShowHistoryButton = true;
+                var list = new List<Note>();
+                var items = lstViewNotes.SelectedItems;
+                foreach (var item in items)
+                {
+                    list.Add(item as Note);
+                }
+                NoteSelectionChanged.Invoke(this, list);
             }
-            else
-            {
-                noteEditorControl.Note = null;
-                noteEditorControl.ShowEditButton = false;
-                noteEditorControl.ShowHistoryButton = false;
-            }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //noteTitleTextBox.Text = SelectedNote.Data.Title;  // noteBodyTextBox.Text;
-        }
-
-        private void NoteEditor_HistoryButtonClick(object sender, EventArgs e)
-        {
-            HistoryButtonClicked?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void NoteEditor_EditButtonClick(object sender, EventArgs e)
-        {
-            noteEditorControl.IsInEditMode = true;
-        }
-
-        private void NoteEditor_SaveButtonClick(object sender, EventArgs e)
-        {
-            noteEditorControl.IsInEditMode = false;
-            if(String.IsNullOrEmpty(noteEditorControl.Note.Id))
-            {
-                var newNote = noteEditorControl.Note;
-                newNote.Id = Guid.NewGuid().ToString("N");
-                _notes.Add(newNote);
-                SelectNoteId(newNote.Id);
-            }
-        }
-
-        private void NoteEditor_CancelButtonClick(object sender, EventArgs e)
-        {
-            noteEditorControl.IsInEditMode = false;
-
-        }
-
-        public void AddNote()
-        {
-            lstViewNotes.SelectedIndex = -1;
-            var newNote = new Note()
-            {
-                Id = String.Empty,
-                CurrentVersionNum = 0
-            };
-            newNote.Data.Title = String.Empty;
-            newNote.Data.Body = String.Empty;
-            noteEditorControl.Note = newNote;
-            noteEditorControl.IsInEditMode = true;
         }
 
 

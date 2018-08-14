@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="SecureNotesWpfClient.NotebookEditControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SecureNotesWpfClient"
+             mc:Ignorable="d" d:DesignWidth="607.159" d:DesignHeight="256">
+
+    <Grid x:Name="grdViewNotes">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TabControl x:Name="leftTabControl" SelectedIndex="0" Grid.Column="0">
+            <TabItem x:Name="listViewTab" Header="Notes" Visibility="Visible" Margin="-2,-2,-2,0" HorizontalAlignment="Right" Width="47">
+                <local:NoteListControl x:Name="noteListControl" Margin="2,0,2,2" VerticalAlignment="Stretch"
+                                       NoteSelectionChanged = "NoteList_NoteSelectionChanged" 
+                                       />
+            </TabItem>
+            <TabItem x:Name="noteHistoryTab" Header="Merge" Visibility="Visible">
+                <local:NoteHistoryControl x:Name="noteHistoryControl" Margin="2,0,2,2" VerticalAlignment="Stretch" />
+            </TabItem>
+        </TabControl>
+
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+
+        <Border Grid.Column="2" BorderThickness="1" BorderBrush="Black">
+            <local:NoteEditorControl x:Name="noteEditorControl" 
+                                     HistoryButtonClicked = "NoteEditor_HistoryButtonClick" 
+                                     EditButtonClicked="NoteEditor_EditButtonClick"  
+                                     SaveButtonClicked="NoteEditor_SaveButtonClick"
+                                     CancelButtonClicked="NoteEditor_CancelButtonClick"
+                                     />
+        </Border>
+
+    </Grid>
+
+
+</UserControl>

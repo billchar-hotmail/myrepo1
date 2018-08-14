@@ -38,7 +38,7 @@ namespace SecureNotesWpfClient
 
             CurrentNotebook = _notesService.GetNotebook("1");
             //notesList.DataContext = CurrentNotebook.Notes;
-            notesList.Notes = CurrentNotebook.Notes;
+            notebookEditControl.Notes = CurrentNotebook.Notes;
         }
 
         private void CommonCommanBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -159,33 +159,16 @@ namespace SecureNotesWpfClient
 
         private void AddNoteButton_Click(object sender, RoutedEventArgs e)
         {
-            notesList.AddNote();
+            notebookEditControl.AddNote();
         }
 
 
-        private void NoteList_HistoryButtonClick(object sender, EventArgs e)
+        private void NotebookEdit_SaveNote(object sender, EventArgs e)
         {
-            var note = notesList.SelectedNote;
-            if (note != null)
-            {
-                noteMergeControl.Note = note;
-                MainTabControl.SelectedIndex = 1;
-            }
-
-            //HistoryButtonClicked?.Invoke(this, EventArgs.Empty);
+            var note = notebookEditControl.SelectedNote;
+            //notebookEditControl.UpdateNote(note);
+            mainTabControl.SelectedIndex = 0;
         }
-
-        private void NoteMerge_SaveButtonClick(object sender, EventArgs e)
-        {
-            var note = noteMergeControl.Note;
-            notesList.UpdateNote(note);
-            MainTabControl.SelectedIndex = 0;
-        }
-        private void NoteMerge_CancelButtonClick(object sender, EventArgs e)
-        {
-            MainTabControl.SelectedIndex = 0;
-        }
-
     }
 
 }
