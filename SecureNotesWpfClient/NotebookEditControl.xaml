@@ -19,7 +19,7 @@
         <TabControl x:Name="leftTabControl" SelectedIndex="0" Grid.Column="0">
             <TabItem x:Name="listViewTab" Header="Notes" Visibility="Visible" Margin="-2,-2,-2,0" HorizontalAlignment="Right" Width="47">
                 <local:NoteListControl x:Name="noteListControl" Margin="2,0,2,2" VerticalAlignment="Stretch"
-                                       NoteSelectionChanged = "NoteList_NoteSelectionChanged" 
+                                       NoteSelectionChanged="NoteList_NoteSelectionChanged" 
                                        />
             </TabItem>
             <TabItem x:Name="noteHistoryTab" Header="Merge" Visibility="Visible">
@@ -31,7 +31,7 @@
 
         <Border Grid.Column="2" BorderThickness="1" BorderBrush="Black">
             <local:NoteEditorControl x:Name="noteEditorControl" 
-                                     HistoryButtonClicked = "NoteEditor_HistoryButtonClick" 
+                                     HistoryButtonClicked="NoteEditor_HistoryButtonClick" 
                                      EditButtonClicked="NoteEditor_EditButtonClick"  
                                      SaveButtonClicked="NoteEditor_SaveButtonClick"
                                      CancelButtonClicked="NoteEditor_CancelButtonClick"

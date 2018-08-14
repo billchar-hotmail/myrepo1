@@ -138,9 +138,6 @@
     <Compile Include="NoteListControl.xaml.cs">
       <DependentUpon>NoteListControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NoteMergeControl.xaml.cs">
-      <DependentUpon>NoteMergeControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Services\DatabaseDefinition.cs" />
     <Compile Include="Services\NotesService.cs" />
     <Compile Include="UserControl1.xaml.cs">
@@ -176,10 +173,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NoteListControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="NoteMergeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

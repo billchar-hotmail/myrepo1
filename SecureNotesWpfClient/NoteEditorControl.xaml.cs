@@ -103,28 +103,24 @@ namespace SecureNotesWpfClient
 
         private void editButton_Click(object sender, RoutedEventArgs e)
         {
-            if (EditButtonClicked != null)
-                EditButtonClicked(this, EventArgs.Empty);
+            EditButtonClicked?.Invoke(this, EventArgs.Empty);
         }
 
         private void historyButton_Click(object sender, RoutedEventArgs e)
         {
-            if (HistoryButtonClicked != null)
-                HistoryButtonClicked(this, EventArgs.Empty);
+            HistoryButtonClicked?.Invoke(this, EventArgs.Empty);
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
             CopyNote(_externalNote, _internalNote);
-            if (CancelButtonClicked != null)
-                CancelButtonClicked(this, EventArgs.Empty);
+            CancelButtonClicked?.Invoke(this, EventArgs.Empty);
         }
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
             CopyNote(_internalNote, _externalNote);
-            if (SaveButtonClicked != null)
-                SaveButtonClicked(this, EventArgs.Empty);
+            SaveButtonClicked?.Invoke(this, EventArgs.Empty);
         }
 
     }

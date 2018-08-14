@@ -24,7 +24,7 @@ namespace SecureNotesWpfClient
     /// </summary>
     public partial class NoteListControl : UserControl
     {
-        private ICollection<Note> _notes;
+        private ObservableCollection<Note> _notes;
 
         public delegate void NoteSelectionChangedHandler(object sender, ICollection<Note> selectedNotes);
 
@@ -35,11 +35,11 @@ namespace SecureNotesWpfClient
         {
             InitializeComponent();
             //noteEditorControl.EditButtonClicked += NoteEditor_EditButtonClick;
-            _notes = new Collection<Note>();
+            _notes = new ObservableCollection<Note>();
             lstViewNotes.ItemsSource = _notes;
         }
 
-        public ICollection<Note> Notes
+        public ObservableCollection<Note> Notes
         {
             get { return _notes; }
             set
