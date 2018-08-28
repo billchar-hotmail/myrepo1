@@ -111,9 +111,8 @@
     <Compile Include="AccountSetupWindow.xaml.cs">
       <DependentUpon>AccountSetupWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\NotebookData.cs" />
-    <Compile Include="Data\NoteMergeStatus.cs" />
-    <Compile Include="Data\NoteData.cs" />
+    <Compile Include="Api\TimeApiModel.cs" />
+    <Compile Include="Models\NotebookData.cs" />
     <Compile Include="Data\NoteSyncStatus.cs" />
     <Compile Include="Extensions\SQLiteConnectionExtensions.cs" />
     <Compile Include="Config\AppConfig.cs" />
@@ -123,11 +122,12 @@
     <Compile Include="Helpers\Int32Helpter.cs" />
     <Compile Include="Helpers\SqlTableUpdtaeBuilder.cs" />
     <Compile Include="Helpers\TimeZoneHelper.cs" />
-    <Compile Include="Models\Note.cs" />
+    <Compile Include="Models\NoteData.cs" />
+    <Compile Include="Models\NoteListItem.cs" />
     <Compile Include="Models\Notebook.cs" />
     <Compile Include="Models\NoteVersion.cs" />
-    <Compile Include="NoteEditorControl.xaml.cs">
-      <DependentUpon>NoteEditorControl.xaml</DependentUpon>
+    <Compile Include="NoteEditControl.xaml.cs">
+      <DependentUpon>NoteEditControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="NoteHistoryControl.xaml.cs">
       <DependentUpon>NoteHistoryControl.xaml</DependentUpon>
@@ -151,7 +151,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="ApiModels\TestApiModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -160,7 +159,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="NoteEditorControl.xaml">
+    <Page Include="NoteEditControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

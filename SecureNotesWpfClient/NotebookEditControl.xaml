@@ -11,7 +11,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -30,7 +30,7 @@
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
 
         <Border Grid.Column="2" BorderThickness="1" BorderBrush="Black">
-            <local:NoteEditorControl x:Name="noteEditorControl" 
+            <local:NoteEditControl x:Name="noteEditorControl" 
                                      HistoryButtonClicked="NoteEditor_HistoryButtonClick" 
                                      EditButtonClicked="NoteEditor_EditButtonClick"  
                                      SaveButtonClicked="NoteEditor_SaveButtonClick"

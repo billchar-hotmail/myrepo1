@@ -13,10 +13,10 @@ namespace SecureNotesWpfClient.Services
     {
 
 
-        protected List<Note> GetSynchedNotes(string notebookId, SQLiteConnection conn)
+        protected List<NoteListItem> GetSynchedNotes(string notebookId, SQLiteConnection conn)
         {
-            var list = new List<Note>();
-            var sql = "SELECT n.id, n.sync_status, n.merge_status, n.current_version_num, n.created_utc, v.created_utc, v.data " +
+            var list = new List<NoteListItem>();
+            var sql = "SELECT n.id, n.sync_status, n.merged, n.deleted, n.current_version_num, n.created_utc, n.deleted_utc, v.created_utc, v.data " +
                       "FROM Note n " +
                       "LEFT OUTER JOIN NoteVersion v ON ((n.id = v.note_id) AND (n.current_version_num = v.version_num)) " +
                       "WHERE n.notebook_id = @notebook_id " +
@@ -29,14 +29,16 @@ namespace SecureNotesWpfClient.Services
             {
                 while (reader.Read())
                 {
-                    var note = new Note();
+                    var note = new NoteListItem();
                     note.Id = reader.GetString(0);
                     note.SyncStatus = (NoteSyncStatus)reader.GetInt32(1);
-                    note.MergeStatus = (NoteMergeStatus)reader.GetInt32(2);
-                    note.CurrentVersionNum = reader.GetInt32(3);
-                    note.CreatedUTC = reader.GetDateTime(4);
-                    note.ModifiedUTC = reader.GetDateTime(5);
-                    note.Data.AsString = reader.GetString(6);
+                    note.Merged = reader.GetBoolean(2);
+                    note.Deleted = reader.GetBoolean(3);
+                    note.CurrentVersionNum = reader.GetInt32(4);
+                    note.CreatedUTC = reader.GetDateTime(5);
+                    note.DeletedUTC = reader.IsDBNull(6) ? null : new Nullable<DateTime>(reader.GetDateTime(6));
+                    note.ModifiedUTC = reader.GetDateTime(7);
+                    note.Data.AsString = reader.GetString(8);
                     list.Add(note);
                 }
             }
@@ -47,10 +49,10 @@ namespace SecureNotesWpfClient.Services
             return list;
         }
 
-        protected List<Note> GetModifiedNotes(string notebookId, SQLiteConnection conn)
+        protected List<NoteListItem> GetModifiedNotes(string notebookId, SQLiteConnection conn)
         {
-            var list = new List<Note>();
-            var sql = "SELECT n.id, n.sync_status, n.merge_status, n.current_version_num, n.created_utc, v.created_utc, v.data " +
+            var list = new List<NoteListItem>();
+            var sql = "SELECT n.id, n.sync_status, n.merged, n.deleted, n.current_version_num, n.created_utc, n.deleted_utc, v.created_utc, v.data " +
                       "FROM Note n " +
                       "LEFT OUTER JOIN NoteVersion v ON ((n.id = v.note_id) AND (v.version_num = 0)) " +
                       "WHERE n.notebook_id = @notebook_id";
@@ -62,14 +64,16 @@ namespace SecureNotesWpfClient.Services
             {
                 while (reader.Read())
                 {
-                    var note = new Note();
+                    var note = new NoteListItem();
                     note.Id = reader.GetString(0);
                     note.SyncStatus = (NoteSyncStatus)reader.GetInt32(1);
-                    note.MergeStatus = (NoteMergeStatus)reader.GetInt32(2);
-                    note.CurrentVersionNum = reader.GetInt32(3);
-                    note.CreatedUTC = reader.GetDateTime(4);
-                    note.ModifiedUTC = reader.GetDateTime(5);
-                    note.Data.AsString = reader.GetString(6);
+                    note.Merged = reader.GetBoolean(2);
+                    note.Deleted = reader.GetBoolean(3);
+                    note.CurrentVersionNum = reader.GetInt32(4);
+                    note.CreatedUTC = reader.GetDateTime(5);
+                    note.DeletedUTC = reader.IsDBNull(6) ? null : new Nullable<DateTime>(reader.GetDateTime(6));
+                    note.ModifiedUTC = reader.GetDateTime(7);
+                    note.Data.AsString = reader.GetString(8);
                     list.Add(note);
                 }
             }
@@ -143,7 +147,7 @@ namespace SecureNotesWpfClient.Services
             try
             {
                 LoadNotebook(notebookId, notebook, conn);
-                var notes = new List<Note>();
+                var notes = new List<NoteListItem>();
                 notes.AddRange(GetSynchedNotes(notebookId, conn));
                 notes.AddRange(GetModifiedNotes(notebookId, conn));
                 notebook.Notes.Clear();

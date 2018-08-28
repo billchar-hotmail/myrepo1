@@ -26,53 +26,45 @@ namespace SecureNotesWpfClient
         //[Browsable(true)]
         //public event EventHandler SaveButtonClicked;
 
-        public ObservableCollection<Note> Notes { get; private set; }
+        public ObservableCollection<NoteListItem> Notes
+        {
+            get { return noteListControl.Notes; }
+        }
 
-        //public static readonly DependencyProperty LabelProperty =
-        //    DependencyProperty.Register("Label", typeof(string),
-        //    typeof(FieldUserControl), new PropertyMetadata(""));
-
-
-
-        public Note SelectedNote
+        public NoteListItem SelectedNote
         {
             get { return noteListControl.SelectedNote; }
-            set { noteListControl.SelectedNote = value; }
         }
 
         public NotebookEditControl()
         {
             InitializeComponent();
-
-            Notes = new ObservableCollection<Note>();
-            noteListControl.Notes = Notes;
         }
 
-        protected void SetNotes(ICollection<Note> notes)
+        public void LoadNotebook(Notebook notebook)
         {
-            Notes = notes;
-            noteListControl.Notes = Notes;
-            var noteId = (notes.Count() > 0) ? notes.First().Id : string.Empty;
-            SelectNoteId(noteId, false);
+            Notes.Clear();
+            foreach(var note in notebook.Notes)
+            {
+                Notes.Add(note);
+            }
 
-            noteListControl.SelectNoteId(null);
-            noteEditorControl.Note = null;
-            noteEditorControl.SetViewMode(enableEdit: false, enableHistory: false);
+            var noteId = (notebook.Notes.Count() > 0) ? notebook.Notes.First().Id : string.Empty;
+            ViewNoteId(noteId);
         }
 
-        public void SelectNoteId(string noteId, bool editMode = false)
+        public void ViewNoteId(string noteId)
         {
             leftTabControl.SelectedIndex = 0;
             noteListControl.SelectNoteId(noteId);
-            //noteHistoryControl.LoadNoteId(noteId);
-            
         }
+
         public void AddNote()
         {
             leftTabControl.SelectedIndex = 0;
-            noteHistoryControl.LoadNoteId(null);
             noteListControl.SelectNoteId(null);
-            var newNote = new Note()
+
+            var newNote = new NoteListItem()
             {
                 Id = String.Empty,
                 CurrentVersionNum = 0
@@ -101,24 +93,36 @@ namespace SecureNotesWpfClient
             {
                 var newNote = noteEditorControl.Note;
                 newNote.Id = Guid.NewGuid().ToString("N");
-                _notes.Add(newNote);
-                SelectNoteId(newNote.Id);
+                Notes.Add(newNote);
+                noteListControl.SelectNoteId(newNote.Id);
+                leftTabControl.SelectedIndex = 0;
             }
-            var enableHistory = (noteHistoryControl.Notes.Count() > 0);
-            noteEditorControl.SetViewMode(enableEdit: true, enableHistory: false);
-
+            else
+            {
+                var enableHistory = (noteHistoryControl.Notes.Count() > 0);
+                noteEditorControl.SetViewMode(enableEdit: true, enableHistory: enableHistory);
+                leftTabControl.SelectedIndex = 0;
+            }
             //SaveButtonClicked?.Invoke(this, EventArgs.Empty);
         }
 
         private void NoteEditor_CancelButtonClick(object sender, EventArgs e)
         {
-            leftTabControl.SelectedIndex = 0;
-            var enableHistory = (noteHistoryControl.Notes.Count() > 0);
-            noteEditorControl.SetViewMode(enableEdit: true, enableHistory: enableHistory);
+            if (noteListControl.SelectedNote == null)
+            {
+                leftTabControl.SelectedIndex = 0;
+                noteEditorControl.Note = null;
+                noteEditorControl.SetViewMode(false, false);
+            }
+            else
+            {
+                leftTabControl.SelectedIndex = 0;
+                var enableHistory = (noteHistoryControl.Notes.Count() > 0);
+                noteEditorControl.SetViewMode(enableEdit: true, enableHistory: enableHistory);
+            }
         }
 
-
-        private void NoteList_NoteSelectionChanged(object sender, ICollection<Note> selectedNotes)
+        private void NoteList_NoteSelectionChanged(object sender, ICollection<NoteListItem> selectedNotes)
         {
             if (selectedNotes.Count == 1)
             {

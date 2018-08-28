@@ -6,11 +6,12 @@
              xmlns:local="clr-namespace:SecureNotesWpfClient"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid x:Name="mainGrid">
 
         <ListView x:Name="lstViewNotes" ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.Column="0" SelectionChanged="lstViewNotes_SelectionChanged">
             <ListView.View>
                 <GridView x:Name="grdNotes">
+                    <GridViewColumn Header="ST"  DisplayMemberBinding="{Binding ItemState}" Width="30"/>
                     <GridViewColumn Header="Title"  DisplayMemberBinding="{Binding Data.Title}" Width="80"/>
                     <GridViewColumn Header="Created"  DisplayMemberBinding="{Binding CreatedDT, StringFormat='MM/dd/yy'}" Width="80"/>
                     <GridViewColumn Header="Modified"  DisplayMemberBinding="{Binding ModifiedDT, StringFormat='MM/dd/yy'}" Width="80"/>

@@ -24,9 +24,9 @@ namespace SecureNotesWpfClient
     /// </summary>
     public partial class NoteListControl : UserControl
     {
-        private ObservableCollection<Note> _notes;
+        private ObservableCollection<NoteListItem> _notes;
 
-        public delegate void NoteSelectionChangedHandler(object sender, ICollection<Note> selectedNotes);
+        public delegate void NoteSelectionChangedHandler(object sender, ICollection<NoteListItem> selectedNotes);
 
         [Browsable(true)]
         public event NoteSelectionChangedHandler NoteSelectionChanged;
@@ -35,23 +35,18 @@ namespace SecureNotesWpfClient
         {
             InitializeComponent();
             //noteEditorControl.EditButtonClicked += NoteEditor_EditButtonClick;
-            _notes = new ObservableCollection<Note>();
+            _notes = new ObservableCollection<NoteListItem>();
             lstViewNotes.ItemsSource = _notes;
         }
 
-        public ObservableCollection<Note> Notes
+        public ObservableCollection<NoteListItem> Notes
         {
             get { return _notes; }
-            set
-            {
-                _notes = value;
-                lstViewNotes.ItemsSource = value;
-            }
         }
 
-        public Note SelectedNote
+        public NoteListItem SelectedNote
         {
-            get { return (Note)lstViewNotes.SelectedItem; }
+            get { return (NoteListItem)lstViewNotes.SelectedItem; }
             set { SelectNoteId(value?.Id); }
         }
 
@@ -64,19 +59,19 @@ namespace SecureNotesWpfClient
                 lstViewNotes.SelectedItem = note;
         }
 
-        public void AddNote(Note note)
+        public void AddNote(NoteListItem note)
         {
             _notes.Add(note);
             SelectNoteId(note.Id);
         }
 
-        public void UpdateNote(Note note)
+        public void UpdateNote(NoteListItem note)
         {
             var item = _notes.Where(x => x.Id == note.Id).FirstOrDefault();
             if (item != null)
             {
                 item.SyncStatus = note.SyncStatus;
-                item.MergeStatus = note.MergeStatus;
+                item.Merged = note.Merged;
                 item.CurrentVersionNum = note.CurrentVersionNum;
                 item.CreatedUTC = note.CreatedUTC;
                 item.ModifiedUTC = note.ModifiedUTC;
@@ -89,11 +84,11 @@ namespace SecureNotesWpfClient
         {
             if (NoteSelectionChanged != null)
             {
-                var list = new List<Note>();
+                var list = new List<NoteListItem>();
                 var items = lstViewNotes.SelectedItems;
                 foreach (var item in items)
                 {
-                    list.Add(item as Note);
+                    list.Add(item as NoteListItem);
                 }
                 NoteSelectionChanged.Invoke(this, list);
             }

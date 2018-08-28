@@ -61,6 +61,17 @@ namespace Angelo.Aegis.Api
             return Ok(model);
         }
 
+        [HttpPost, Route("ptime")]
+        public async Task<JsonResult> ProcessTime(TimeApiModel time)
+        {
+            var model = new TimeApiModel();
+            model.TimeStr = DateTime.Now.ToString("h:mm:ss");
+            model.DateStr = DateTime.Now.ToString("M/dd/yyyy");
+            model.Id = time.Id;
+
+            return Json(model);
+        }
+
 
     }
 }

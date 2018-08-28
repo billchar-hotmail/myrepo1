@@ -1,4 +1,4 @@
-﻿using SecureNotesWpfClient.ApiModels;
+﻿using SecureNotes.Common;
 using SecureNotesWpfClient.Models;
 using SecureNotesWpfClient.Services;
 using System;
@@ -38,7 +38,7 @@ namespace SecureNotesWpfClient
 
             CurrentNotebook = _notesService.GetNotebook("1");
             //notesList.DataContext = CurrentNotebook.Notes;
-            notebookEditControl.Notes = CurrentNotebook.Notes;
+            notebookEditControl.LoadNotebook(CurrentNotebook);
         }
 
         private void CommonCommanBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -89,12 +89,22 @@ namespace SecureNotesWpfClient
             HttpClient client = new HttpClient();
             
             client.BaseAddress = new Uri("http://localhost:58454");
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             try
             {
-                HttpResponseMessage response = client.GetAsync("/api/stime/1").Result;
-                response.EnsureSuccessStatusCode(); // Throw on error code.
-                var data = response.Content.ReadAsByteArrayAsync().Result;
+                var data = new TimeApiModel();
+                data.Id = "ID1";
+                data.TimeStr = DateTime.Now.ToShortTimeString();
+                data.DateStr = DateTime.Now.ToShortDateString();
+
+                HttpResponseMessage response = client.PostAsJsonAsync("/api/ptime/", data).Result;
+                response.EnsureSuccessStatusCode();
+
+
+
+                //HttpResponseMessage response = client.GetAsync("/api/stime/1").Result;
+                //response.EnsureSuccessStatusCode(); // Throw on error code.
+                var data2 = response.Content.ReadAsByteArrayAsync().Result;
                 var model = response.Content.ReadAsAsync<TimeApiModel>().Result;
                 //if (string.IsNullOrEmpty(model.DateStr) || string.IsNullOrEmpty(model.TimeStr))
                 //    textBox.Text = "No data retrieved";
@@ -125,15 +135,33 @@ namespace SecureNotesWpfClient
             //CreateDatabase();
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void SyncButtonClick(object sender, RoutedEventArgs e)
         {
+            HttpClient client = new HttpClient();
+
+            client.BaseAddress = new Uri("http://localhost:58454");
+            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             try
             {
-                //PopulateDatabase();
+                var data = new TimeApiModel();
+                data.Id = "ID1";
+                data.TimeStr = DateTime.Now.ToShortTimeString();
+                data.DateStr = DateTime.Now.ToShortDateString();
+
+                HttpResponseMessage response = client.PostAsJsonAsync("/api/ptime/", data).Result;
+                response.EnsureSuccessStatusCode();
+                var data2 = response.Content.ReadAsByteArrayAsync().Result;
+                var model = response.Content.ReadAsAsync<TimeApiModel>().Result;
+                //if (string.IsNullOrEmpty(model.DateStr) || string.IsNullOrEmpty(model.TimeStr))
+                //    textBox.Text = "No data retrieved";
+                //else
+                //    textBox.Text = model.TimeStr + " " + model.DateStr;
+
+                MessageBox.Show("Sync Successful.");
             }
             catch (Exception ex)
             {
-                //TestUC1.FileName = ex.Message;
+                MessageBox.Show("ClientError: " + ex.Message);
             }
         }
 

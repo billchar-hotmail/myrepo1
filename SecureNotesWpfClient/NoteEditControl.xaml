@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="SecureNotesWpfClient.NoteEditControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SecureNotesWpfClient"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+        <Grid x:Name="noteEditGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <DockPanel Grid.Row="0" Grid.Column="0" LastChildFill="True">
+                <Label Margin="0,0,5,0" FontWeight="Bold" Background="Transparent" VerticalAlignment="Center">Title:</Label>
+                <TextBox x:Name="noteTitleTextBox" Margin="2,2,2,0" VerticalContentAlignment="Center"
+                         IsReadOnly="True" Text="{Binding Path=Data.Title}"/>
+            </DockPanel>
+
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="2,2,2,0" HorizontalAlignment="Right" >
+                <Button x:Name="editButton" Width="28" Height="28" Margin="2" Visibility="Collapsed" Click="editButton_Click">Edit</Button>
+                <Button x:Name="historyButton" Width="28" Height="28" Margin="2" Visibility="Collapsed" Click="historyButton_Click">Hist</Button>
+                <Button x:Name="saveButton" Width="28" Height="28" Margin="2" Visibility="Collapsed" Click="saveButton_Click">Save</Button>
+                <Button x:Name="cancelButton" Width="28" Height="28" Margin="2" Visibility="Collapsed" Click="cancelButton_Click">Cancel</Button>
+            </StackPanel>
+
+            <TextBox x:Name="noteBodyTextBox" Grid.Row="1" Grid.ColumnSpan="2" 
+                         AcceptsReturn="True"
+                         SpellCheck.IsEnabled="True" Language="en-US"
+                         Margin="2,2,2,2" IsReadOnly="True"
+                         Text="{Binding Path=Data.Body}"/>
+
+        </Grid>
+</UserControl>

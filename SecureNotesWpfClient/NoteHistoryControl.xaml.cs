@@ -24,7 +24,7 @@ namespace SecureNotesWpfClient
     public partial class NoteHistoryControl : UserControl
     {
         private NotesService _notesService;
-        private List<NoteVersion> _noteHistory;
+        private ObservableCollection<NoteVersion> _noteHistory;
 
         public IEnumerable<NoteVersion> Notes
         {
@@ -35,49 +35,20 @@ namespace SecureNotesWpfClient
         {
             InitializeComponent();
             _notesService = new NotesService();
-            _noteHistory = new List<NoteVersion>();
-            //this.DataContext = this;
+            _noteHistory = new ObservableCollection<NoteVersion>();
+            versionComboBox.ItemsSource = _noteHistory;
         }
 
         public int LoadNoteId(string noteId)
         {
-            _noteHistory = _notesService.GetNoteHistory(noteId);
-            versionComboBox.ItemsSource = _noteHistory;
-
-            // Add extra items
-            _noteHistory.Add(new NoteVersion()
+            var notes = _notesService.GetNoteHistory(noteId);
+            _noteHistory.Clear();
+            foreach(var note in notes)
             {
-                NoteId = "1",
-                VersionNum = 2,
-                CreatedUTC = DateTime.UtcNow,
-                Data = new Data.NoteData()
-                {
-                    Title = "Test 123",
-                    Body = "Test body 123"
-                }
-            });
-            _noteHistory.Add(new NoteVersion()
-            {
-                NoteId = "1",
-                VersionNum = 3,
-                CreatedUTC = DateTime.UtcNow,
-                Data = new Data.NoteData()
-                {
-                    Title = "Test 1234",
-                    Body = "Test body 1234"
-                }
-            });
-
+                _noteHistory.Add(note);
+            }
             versionComboBox.SelectedIndex = 0;
             return _noteHistory.Count;
-        }
-
-        protected void LoadText(int index)
-        {
-            if (index < _noteHistory.Count)
-                noteBodyTextBox.Text = _noteHistory[index].Data.Body;
-            else
-                noteBodyTextBox.Text = string.Empty;
         }
 
         private void versionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

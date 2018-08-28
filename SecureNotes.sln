@@ -9,7 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureNotesWpfClient", "Sec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecureNotes.Common", "SecureNotes.Common\SecureNotes.Common.csproj", "{9809B552-CA25-4C8B-9CFD-93F66A8C6341}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp2", "ConsoleApp2\ConsoleApp2.csproj", "{18D49A04-B806-4521-8D06-8D43189BE5C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp2", "ConsoleApp2\ConsoleApp2.csproj", "{18D49A04-B806-4521-8D06-8D43189BE5C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureNotesWeb3", "SecureNotesWeb3\SecureNotesWeb3.csproj", "{FF6B517E-ACA7-49DC-A796-A5FE1F6BB89A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureNotesWeb4", "SecureNotesWeb4\SecureNotesWeb4.csproj", "{0F6D834F-A61F-4A74-87C0-C0008B865D72}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{18D49A04-B806-4521-8D06-8D43189BE5C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18D49A04-B806-4521-8D06-8D43189BE5C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18D49A04-B806-4521-8D06-8D43189BE5C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF6B517E-ACA7-49DC-A796-A5FE1F6BB89A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF6B517E-ACA7-49DC-A796-A5FE1F6BB89A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF6B517E-ACA7-49DC-A796-A5FE1F6BB89A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF6B517E-ACA7-49DC-A796-A5FE1F6BB89A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F6D834F-A61F-4A74-87C0-C0008B865D72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F6D834F-A61F-4A74-87C0-C0008B865D72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F6D834F-A61F-4A74-87C0-C0008B865D72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F6D834F-A61F-4A74-87C0-C0008B865D72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

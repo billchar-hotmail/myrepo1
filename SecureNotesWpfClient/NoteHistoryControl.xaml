@@ -35,8 +35,7 @@
 
         <TextBox x:Name="noteBodyTextBox" Grid.Row="1" Grid.ColumnSpan="2" 
                          SpellCheck.IsEnabled="True" Language="en-US"
-                         Margin="2,2,2,2" IsReadOnly="True"
-                         Text="{Binding Path=Data.Body}"/>
+                         Margin="2,2,2,2" IsReadOnly="True"/>
 
     </Grid>
 </UserControl>

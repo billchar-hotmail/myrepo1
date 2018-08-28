@@ -1,5 +1,6 @@
 ﻿using SecureNotesWpfClient.Data;
 using SecureNotesWpfClient.Extensions;
+using SecureNotesWpfClient.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -58,8 +59,10 @@ namespace SecureNotesWpfClient.Services
                     notebook_id VARCHAR(38) NOT NULL,
                     current_version_num INT NOT NULL,
                     sync_status  INT NOT NULL,
-                    merge_status INT NOT NULL,
-                    created_utc  DATETIME NULL
+                    merged       BIT NOT NULL,
+                    deleted      BIT NOT NULL,
+                    created_utc  DATETIME NULL,
+                    deleted_utc  DATETIME NULL
                  )"
             );
 
@@ -129,9 +132,11 @@ namespace SecureNotesWpfClient.Services
                         t.Keys["Id"] = i.ToString();
                         t.Fields["notebook_id"] = "1";
                         t.Fields["current_version_num"] = 0;
-                        t.Fields["sync_status"] = NoteSyncStatus.Pending;
-                        t.Fields["merge_status"] = NoteMergeStatus.None;
+                        t.Fields["sync_status"] = NoteSyncStatus.ReadyToSync;
+                        t.Fields["merged"] = false;
+                        t.Fields["deleted"] = false;
                         t.Fields["created_utc"] = DateTime.UtcNow;
+                        t.Fields["deleted_utc"] = null;
                     });
 
                     var data1 = new NoteData()
