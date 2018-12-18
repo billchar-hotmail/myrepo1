@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp2", "ConsoleApp2\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecureNotesWebAPI", "SecureNotesWebAPI\SecureNotesWebAPI.csproj", "{F3E6441B-9803-440B-A7EF-2CFEF1CE7AC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureNotesWebClient", "SecureNotesWebClient\SecureNotesWebClient.csproj", "{739370DB-0509-4C0C-A4E7-2C21B7EBE185}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecureNotesWebClient", "SecureNotesWebClient\SecureNotesWebClient.csproj", "{739370DB-0509-4C0C-A4E7-2C21B7EBE185}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Identity.Dapper", "AspNetCore.Identity.Dapper\AspNetCore.Identity.Dapper.csproj", "{149C5005-D685-42F7-A7FD-9FF1B253FF0A}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SecureNotes.Database.Identity", "SecureNotes.Database.Identity\SecureNotes.Database.Identity.sqlproj", "{47AD48C9-48C1-4747-8F4F-03CB21E3B6DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,16 @@ Global
 		{739370DB-0509-4C0C-A4E7-2C21B7EBE185}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{739370DB-0509-4C0C-A4E7-2C21B7EBE185}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{739370DB-0509-4C0C-A4E7-2C21B7EBE185}.Release|Any CPU.Build.0 = Release|Any CPU
+		{149C5005-D685-42F7-A7FD-9FF1B253FF0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{149C5005-D685-42F7-A7FD-9FF1B253FF0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{149C5005-D685-42F7-A7FD-9FF1B253FF0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{149C5005-D685-42F7-A7FD-9FF1B253FF0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47AD48C9-48C1-4747-8F4F-03CB21E3B6DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47AD48C9-48C1-4747-8F4F-03CB21E3B6DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47AD48C9-48C1-4747-8F4F-03CB21E3B6DE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{47AD48C9-48C1-4747-8F4F-03CB21E3B6DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47AD48C9-48C1-4747-8F4F-03CB21E3B6DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47AD48C9-48C1-4747-8F4F-03CB21E3B6DE}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

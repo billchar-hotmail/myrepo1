@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace SecureNotesWebClient.Data
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser2 : IdentityUser
     {
 
         //[Required]
         public string FullName { get; set; }
 
-        public ApplicationUser()
+        public ApplicationUser2()
         {
 
         }
