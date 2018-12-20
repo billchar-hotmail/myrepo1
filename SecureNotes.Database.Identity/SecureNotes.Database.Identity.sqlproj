@@ -72,9 +72,9 @@
     <Build Include="Identity\Tables\UserRoles.sql" />
     <Build Include="Identity\Tables\Users.sql" />
     <Build Include="Identity\Tables\UserTokens.sql" />
-    <None Include="NonBuild Scripts\SeedData.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Profiles\SecureNotes.Database.Identity.dev.publish.xml" />
+    <None Include="NonBuild Scripts\work_2018_12_12.sql" />
   </ItemGroup>
 </Project>

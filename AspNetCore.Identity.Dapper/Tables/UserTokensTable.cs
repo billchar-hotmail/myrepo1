@@ -12,7 +12,7 @@ namespace AspNetCore.Identity.Dapper
 
         public async Task<IEnumerable<UserToken>> GetTokensAsync(string userId) {
             const string command = "SELECT * " +
-                                   "FROM dbo.UserTokens " +
+                                   "FROM [Identity].UserTokens " +
                                    "WHERE UserId = @UserId;";
 
             using (var sqlConnection = await _databaseConnectionFactory.CreateConnectionAsync()) {

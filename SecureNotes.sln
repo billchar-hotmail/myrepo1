@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecureNotesWeb", "SecureNotesWeb\SecureNotesWeb.csproj", "{A19AB2F5-ED46-44C6-97AB-8A790CCBA7B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecureNotesWeb_old", "SecureNotesWeb\SecureNotesWeb_old.csproj", "{A19AB2F5-ED46-44C6-97AB-8A790CCBA7B1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureNotesWpfClient", "SecureNotesWpfClient\SecureNotesWpfClient.csproj", "{B560ED28-FB95-420E-8767-E55CC0B022BF}"
 EndProject

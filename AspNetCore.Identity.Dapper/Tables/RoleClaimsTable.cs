@@ -14,7 +14,7 @@ namespace AspNetCore.Identity.Dapper
 
         public async Task<IList<Claim>> GetClaimsAsync(string roleId) {
             const string command = "SELECT * " +
-                                   "FROM dbo.RoleClaims " +
+                                   "FROM [Identity].RoleClaims " +
                                    "WHERE RoleId = @RoleId;";
 
             IEnumerable<RoleClaim> roleClaims = new List<RoleClaim>();

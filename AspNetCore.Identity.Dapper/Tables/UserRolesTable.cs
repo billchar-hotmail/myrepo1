@@ -12,8 +12,8 @@ namespace AspNetCore.Identity.Dapper
 
         public async Task<IEnumerable<UserRole>> GetRolesAsync(ApplicationUser user) {
             const string command = "SELECT r.Id AS RoleId, r.Name AS RoleName " +
-                                   "FROM dbo.Roles AS r " +
-                                   "INNER JOIN dbo.UserRoles AS ur ON ur.RoleId = r.Id " +
+                                   "FROM [Identity].Roles AS r " +
+                                   "INNER JOIN [Identity].UserRoles AS ur ON ur.RoleId = r.Id " +
                                    "WHERE ur.UserId = @UserId;";
 
             using (var sqlConnection = await _databaseConnectionFactory.CreateConnectionAsync()) {

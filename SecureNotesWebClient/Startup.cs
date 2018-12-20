@@ -9,13 +9,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SecureNotesWebClient.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SecureNotesWebClient.Services;
 using Microsoft.Extensions.Logging;
 using AspNetCore.Identity.Dapper;
 using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace SecureNotesWebClient
 {
@@ -52,18 +52,25 @@ namespace SecureNotesWebClient
                 .AddDapperStores(connectionString)
                 .AddDefaultTokenProviders();
 
+            // Add application services.
+            services.AddTransient<IEmailSender, AuthMessageSender>();
+            //services.AddTransient<ISmsSender, AuthMessageSender>();
+
+
             // Add support for non-distributed memory cache in the application.
             services.AddMemoryCache();
 
             services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
-            services.Configure<IdentityOptions>(options => {
+            services.Configure<IdentityOptions>(options =>
+            {
                 // Password settings.
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireDigit = false; // true
+                options.Password.RequiredLength = 4; // 6;
+                options.Password.RequireNonAlphanumeric = false; // true;
                 options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = true;
+                options.Password.RequireLowercase = false; // true;
+                options.Password.RequiredUniqueChars = 1;
                 // Lockout settings.
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
                 options.Lockout.MaxFailedAccessAttempts = 6;
@@ -82,7 +89,6 @@ namespace SecureNotesWebClient
                 options.SlidingExpiration = true;
             });
 
-            // Map appsettings.json file elements to a strongly typed class.
             // Map appsettings.json file elements to a strongly typed class.
             //services.Configure<AppSettings>(Configuration);
             // Add services required for using options.

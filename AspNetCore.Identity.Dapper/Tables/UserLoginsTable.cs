@@ -15,7 +15,7 @@ namespace AspNetCore.Identity.Dapper
 
         public async Task<IList<UserLoginInfo>> GetLoginsAsync(ApplicationUser user) {
             const string command = "SELECT * " +
-                                   "FROM dbo.UserLogins " +
+                                   "FROM [Identity].UserLogins " +
                                    "WHERE UserId = @UserId;";
 
             using (var sqlConnection = await _databaseConnectionFactory.CreateConnectionAsync()) {
@@ -31,7 +31,7 @@ namespace AspNetCore.Identity.Dapper
             string[] command =
             {
                 "SELECT UserId " +
-                "FROM dbo.UserLogins " +
+                "FROM [Identity].UserLogins " +
                 "WHERE LoginProvider = @LoginProvider AND ProviderKey = @ProviderKey;"
             };
 
@@ -46,7 +46,7 @@ namespace AspNetCore.Identity.Dapper
                 }
 
                 command[0] = "SELECT * " +
-                             "FROM dbo.Users " +
+                             "FROM [Identity].Users " +
                              "WHERE Id = @Id;";
 
                 return await sqlConnection.QuerySingleAsync<ApplicationUser>(command[0], new { Id = userId });
