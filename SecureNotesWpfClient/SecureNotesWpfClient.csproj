@@ -53,7 +53,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>4FA52852C680D2BFF17F9175BB3663114EFD80C3</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>F28012C8B2D0E6D8C750C02EF01A0C82DF786496</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>SecureNotesWpfClient_TemporaryKey.pfx</ManifestKeyFile>

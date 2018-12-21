@@ -9,7 +9,12 @@ namespace AspNetCore.Identity.Dapper
     {
         private readonly string _connectionString;
 
-        public SqlConnectionFactory(string connectionString) => _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
+        public SqlConnectionFactory(string connectionString)
+        {
+            if (string.IsNullOrEmpty(connectionString))
+                throw new ArgumentNullException(nameof(connectionString));
+            _connectionString = connectionString;
+        }
 
         public async Task<IDbConnection> CreateConnectionAsync() {
             try {

@@ -1,5 +1,0 @@
-﻿CREATE TABLE [Identity].[TestTable4]
-(
-	[Id] INT NOT NULL PRIMARY KEY,
-	[Name] [NVARCHAR](80) NULL
-)

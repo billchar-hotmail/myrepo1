@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [Identity].[UserTokens](
-	[UserId] [nvarchar](450) NOT NULL,
+	[UserId] UNIQUEIDENTIFIER NOT NULL,
 	[LoginProvider] [nvarchar](128) NOT NULL,
 	[Name] [nvarchar](128) NOT NULL,
 	[Value] [nvarchar](max) NULL,

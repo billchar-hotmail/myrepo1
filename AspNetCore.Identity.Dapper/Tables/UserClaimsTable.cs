@@ -14,7 +14,7 @@ namespace AspNetCore.Identity.Dapper
 
         public async Task<IList<Claim>> GetClaimsAsync(ApplicationUser user) {
             const string command = "SELECT * " +
-                                   "FROM dbo.UserClaims " +
+                                   "FROM [Identity].UserClaims " +
                                    "WHERE UserId = @UserId;";
 
             using (var sqlConnection = await _databaseConnectionFactory.CreateConnectionAsync()) {

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecureNotesWeb", "SecureNotesWeb\SecureNotesWeb.csproj", "{A19AB2F5-ED46-44C6-97AB-8A790CCBA7B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecureNotesWeb_old", "SecureNotesWeb\SecureNotesWeb_old.csproj", "{A19AB2F5-ED46-44C6-97AB-8A790CCBA7B1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureNotesWpfClient", "SecureNotesWpfClient\SecureNotesWpfClient.csproj", "{B560ED28-FB95-420E-8767-E55CC0B022BF}"
 EndProject
@@ -18,6 +18,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Identity.Dapper", "AspNetCore.Identity.Dapper\AspNetCore.Identity.Dapper.csproj", "{149C5005-D685-42F7-A7FD-9FF1B253FF0A}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SecureNotes.Database.Identity", "SecureNotes.Database.Identity\SecureNotes.Database.Identity.sqlproj", "{47AD48C9-48C1-4747-8F4F-03CB21E3B6DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCore.Utilities.Guid", "AspNetCore.Utilities.Guid\AspNetCore.Utilities.Guid.csproj", "{67156D72-CD5F-42B9-B0C6-3DFCF6CC70B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RT.Comb", "RT.Comb\RT.Comb.csproj", "{798D39F1-24AD-4279-93AB-38E03D18D9A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +63,14 @@ Global
 		{47AD48C9-48C1-4747-8F4F-03CB21E3B6DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47AD48C9-48C1-4747-8F4F-03CB21E3B6DE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{47AD48C9-48C1-4747-8F4F-03CB21E3B6DE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{67156D72-CD5F-42B9-B0C6-3DFCF6CC70B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67156D72-CD5F-42B9-B0C6-3DFCF6CC70B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67156D72-CD5F-42B9-B0C6-3DFCF6CC70B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67156D72-CD5F-42B9-B0C6-3DFCF6CC70B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{798D39F1-24AD-4279-93AB-38E03D18D9A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{798D39F1-24AD-4279-93AB-38E03D18D9A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{798D39F1-24AD-4279-93AB-38E03D18D9A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{798D39F1-24AD-4279-93AB-38E03D18D9A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

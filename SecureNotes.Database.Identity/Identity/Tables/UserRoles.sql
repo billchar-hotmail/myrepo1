@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [Identity].[UserRoles](
-	[UserId] [nvarchar](450) NOT NULL,
-	[RoleId] [nvarchar](450) NOT NULL,
+	[UserId] UNIQUEIDENTIFIER NOT NULL,
+	[RoleId] UNIQUEIDENTIFIER NOT NULL,
  CONSTRAINT [PK_UserRoles] PRIMARY KEY CLUSTERED 
 (
 	[UserId] ASC,

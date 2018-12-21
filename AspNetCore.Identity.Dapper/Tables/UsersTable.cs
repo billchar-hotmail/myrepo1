@@ -15,7 +15,7 @@ namespace AspNetCore.Identity.Dapper
         public UsersTable(IDatabaseConnectionFactory databaseConnectionFactory) => _databaseConnectionFactory = databaseConnectionFactory;
 
         public async Task<IdentityResult> CreateAsync(ApplicationUser user) {
-            const string command = "INSERT INTO dbo.Users " +
+            const string command = "INSERT INTO [Identity].Users " +
                                    "VALUES (@Id, @UserName, @NormalizedUserName, @Email, @NormalizedEmail, @EmailConfirmed, @PasswordHash, @SecurityStamp, @ConcurrencyStamp, " +
                                            "@PhoneNumber, @PhoneNumberConfirmed, @TwoFactorEnabled, @LockoutEnd, @LockoutEnabled, @AccessFailedCount);";
 
@@ -49,7 +49,7 @@ namespace AspNetCore.Identity.Dapper
 
         public async Task<IdentityResult> DeleteAsync(ApplicationUser user) {
             const string command = "DELETE " +
-                                   "FROM dbo.Users " +
+                                   "FROM [Identity].Users " +
                                    "WHERE Id = @Id;";
 
             int rowsDeleted;
@@ -68,7 +68,7 @@ namespace AspNetCore.Identity.Dapper
 
         public async Task<ApplicationUser> FindByIdAsync(Guid userId) {
             const string command = "SELECT * " +
-                                   "FROM dbo.Users " +
+                                   "FROM [Identity].Users " +
                                    "WHERE Id = @Id;";
 
             using (var sqlConnection = await _databaseConnectionFactory.CreateConnectionAsync()) {
@@ -80,19 +80,22 @@ namespace AspNetCore.Identity.Dapper
 
         public async Task<ApplicationUser> FindByNameAsync(string normalizedUserName) {
             const string command = "SELECT * " +
-                                   "FROM dbo.Users " +
+                                   "FROM [Identity].Users " +
                                    "WHERE NormalizedUserName = @NormalizedUserName;";
 
-            using (var sqlConnection = await _databaseConnectionFactory.CreateConnectionAsync()) {
-                return await sqlConnection.QuerySingleOrDefaultAsync<ApplicationUser>(command, new {
+            using (var sqlConnection = await _databaseConnectionFactory.CreateConnectionAsync())
+            {
+                var user = await sqlConnection.QuerySingleOrDefaultAsync<ApplicationUser>(command, new
+                {
                     NormalizedUserName = normalizedUserName
                 });
+                return user;
             }
         }
 
         public async Task<ApplicationUser> FindByEmailAsync(string normalizedEmail) {
             const string command = "SELECT * " +
-                                   "FROM dbo.Users " +
+                                   "FROM [Identity].Users " +
                                    "WHERE NormalizedEmail = @NormalizedEmail;";
 
             using (var sqlConnection = await _databaseConnectionFactory.CreateConnectionAsync()) {
@@ -108,7 +111,7 @@ namespace AspNetCore.Identity.Dapper
             // It tracks the changes made and finally commits to the database. UserStore methods just manipulate the user and only CreateAsync, UpdateAsync and DeleteAsync of IUserStore<>
             // write to the database. This makes sense because this way we avoid connection to the database all the time and also we can commit all changes at once by using a transaction.
             const string updateUserCommand =
-                "UPDATE dbo.Users " +
+                "UPDATE [Identity].Users " +
                 "SET UserName = @UserName, NormalizedUserName = @NormalizedUserName, Email = @Email, NormalizedEmail = @NormalizedEmail, EmailConfirmed = @EmailConfirmed, " +
                     "PasswordHash = @PasswordHash, SecurityStamp = @SecurityStamp, ConcurrencyStamp = @ConcurrencyStamp, PhoneNumber = @PhoneNumber, " +
                     "PhoneNumberConfirmed = @PhoneNumberConfirmed, TwoFactorEnabled = @TwoFactorEnabled, LockoutEnd = @LockoutEnd, LockoutEnabled = @LockoutEnabled, " +
@@ -137,14 +140,14 @@ namespace AspNetCore.Identity.Dapper
 
                     if (user.Claims.Count() > 0) {
                         const string deleteClaimsCommand = "DELETE " +
-                                                           "FROM dbo.UserClaims " +
+                                                           "FROM [Identity].UserClaims " +
                                                            "WHERE UserId = @UserId;";
 
                         await sqlConnection.ExecuteAsync(deleteClaimsCommand, new {
                             UserId = user.Id
                         }, transaction);
 
-                        const string insertClaimsCommand = "INSERT INTO dbo.UserClaims (UserId, ClaimType, ClaimValue) " +
+                        const string insertClaimsCommand = "INSERT INTO [Identity].UserClaims (UserId, ClaimType, ClaimValue) " +
                                                            "VALUES (@UserId, @ClaimType, @ClaimValue);";
 
                         await sqlConnection.ExecuteAsync(insertClaimsCommand, user.Claims.Select(x => new {
@@ -156,14 +159,14 @@ namespace AspNetCore.Identity.Dapper
 
                     if (user.Logins.Count() > 0) {
                         const string deleteLoginsCommand = "DELETE " +
-                                                           "FROM dbo.UserLogins " +
+                                                           "FROM [Identity].UserLogins " +
                                                            "WHERE UserId = @UserId;";
 
                         await sqlConnection.ExecuteAsync(deleteLoginsCommand, new {
                             UserId = user.Id
                         }, transaction);
 
-                        const string insertLoginsCommand = "INSERT INTO dbo.UserLogins (LoginProvider, ProviderKey, ProviderDisplayName, UserId) " +
+                        const string insertLoginsCommand = "INSERT INTO [Identity].UserLogins (LoginProvider, ProviderKey, ProviderDisplayName, UserId) " +
                                                            "VALUES (@LoginProvider, @ProviderKey, @ProviderDisplayName, @UserId);";
 
                         await sqlConnection.ExecuteAsync(insertLoginsCommand, user.Logins.Select(x => new {
@@ -176,14 +179,14 @@ namespace AspNetCore.Identity.Dapper
 
                     if (user.Roles.Count() > 0) {
                         const string deleteRolesCommand = "DELETE " +
-                                                          "FROM dbo.UserRoles " +
+                                                          "FROM [Identity].UserRoles " +
                                                           "WHERE UserId = @UserId;";
 
                         await sqlConnection.ExecuteAsync(deleteRolesCommand, new {
                             UserId = user.Id
                         }, transaction);
 
-                        const string insertRolesCommand = "INSERT INTO dbo.UserRoles (UserId, RoleId) " +
+                        const string insertRolesCommand = "INSERT INTO [Identity].UserRoles (UserId, RoleId) " +
                                                           "VALUES (@UserId, @RoleId);";
 
                         await sqlConnection.ExecuteAsync(insertRolesCommand, user.Roles.Select(x => new {
@@ -194,14 +197,14 @@ namespace AspNetCore.Identity.Dapper
 
                     if (user.Tokens.Count() > 0) {
                         const string deleteTokensCommand = "DELETE " +
-                                                           "FROM dbo.UserTokens " +
+                                                           "FROM [Identity].UserTokens " +
                                                            "WHERE UserId = @UserId;";
 
                         await sqlConnection.ExecuteAsync(deleteTokensCommand, new {
                             UserId = user.Id
                         }, transaction);
 
-                        const string insertTokensCommand = "INSERT INTO dbo.UserTokens (UserId, LoginProvider, Name, Value) " +
+                        const string insertTokensCommand = "INSERT INTO [Identity].UserTokens (UserId, LoginProvider, Name, Value) " +
                                                            "VALUES (@UserId, @LoginProvider, @Name, @Value);";
 
                         await sqlConnection.ExecuteAsync(insertTokensCommand, user.Tokens.Select(x => new {
@@ -237,9 +240,9 @@ namespace AspNetCore.Identity.Dapper
 
         public async Task<IList<ApplicationUser>> GetUsersInRoleAsync(string roleName) {
             const string command = "SELECT * " +
-                                   "FROM dbo.Users AS u " +
-                                   "INNER JOIN dbo.UserRoles AS ur ON u.Id = ur.UserId " +
-                                   "INNER JOIN dbo.Roles AS r ON ur.RoleId = r.Id " +
+                                   "FROM [Identity].Users AS u " +
+                                   "INNER JOIN [Identity].UserRoles AS ur ON u.Id = ur.UserId " +
+                                   "INNER JOIN [Identity].Roles AS r ON ur.RoleId = r.Id " +
                                    "WHERE r.Name = @RoleName;";
 
             using (var sqlConnection = await _databaseConnectionFactory.CreateConnectionAsync()) {
@@ -251,8 +254,8 @@ namespace AspNetCore.Identity.Dapper
 
         public async Task<IList<ApplicationUser>> GetUsersForClaimAsync(Claim claim) {
             const string command = "SELECT * " +
-                                   "FROM dbo.Users AS u " +
-                                   "INNER JOIN dbo.UserClaims AS uc ON u.Id = uc.UserId " +
+                                   "FROM [Identity].Users AS u " +
+                                   "INNER JOIN [Identity].UserClaims AS uc ON u.Id = uc.UserId " +
                                    "WHERE uc.ClaimType = @ClaimType AND uc.ClaimValue = @ClaimValue;";
 
             using (var sqlConnection = await _databaseConnectionFactory.CreateConnectionAsync()) {
@@ -265,7 +268,7 @@ namespace AspNetCore.Identity.Dapper
 
         public async Task<IEnumerable<ApplicationUser>> GetAllUsers() {
             const string command = "SELECT * " +
-                                   "FROM dbo.Users;";
+                                   "FROM [Identity].Users;";
 
             using (var sqlConnection = await _databaseConnectionFactory.CreateConnectionAsync()) {
                 return await sqlConnection.QueryAsync<ApplicationUser>(command);
