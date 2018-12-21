@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [Identity].[UserClaims](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[UserId] [nvarchar](450) NOT NULL,
+	[UserId] UNIQUEIDENTIFIER NOT NULL,
 	[ClaimType] [nvarchar](max) NULL,
 	[ClaimValue] [nvarchar](max) NULL,
  CONSTRAINT [PK_UserClaims] PRIMARY KEY CLUSTERED 

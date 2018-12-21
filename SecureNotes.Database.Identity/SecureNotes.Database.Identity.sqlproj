@@ -66,7 +66,6 @@
     <Build Include="Identity.sql" />
     <Build Include="Identity\Tables\RoleClaims.sql" />
     <Build Include="Identity\Tables\Roles.sql" />
-    <Build Include="Identity\Tables\TestTable4.sql" />
     <Build Include="Identity\Tables\UserClaims.sql" />
     <Build Include="Identity\Tables\UserLogins.sql" />
     <Build Include="Identity\Tables\UserRoles.sql" />

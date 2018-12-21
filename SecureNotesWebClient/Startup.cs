@@ -83,9 +83,9 @@ namespace SecureNotesWebClient
             services.ConfigureApplicationCookie(options => {
                 options.Cookie.HttpOnly = false;
                 options.ExpireTimeSpan = TimeSpan.FromDays(7);
-                options.LoginPath = "/account/login";
-                options.LogoutPath = "/account/log-off";
-                options.AccessDeniedPath = "/account/login";
+                options.LoginPath = "/identity/account/login";
+                options.LogoutPath = "/identity/account/log-off";
+                options.AccessDeniedPath = "/identity/account/login";
                 options.SlidingExpiration = true;
             });
 

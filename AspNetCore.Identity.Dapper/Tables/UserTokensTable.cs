@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dapper;
 
@@ -10,7 +11,7 @@ namespace AspNetCore.Identity.Dapper
 
         public UserTokensTable(IDatabaseConnectionFactory databaseConnectionFactory) => _databaseConnectionFactory = databaseConnectionFactory;
 
-        public async Task<IEnumerable<UserToken>> GetTokensAsync(string userId) {
+        public async Task<IEnumerable<UserToken>> GetTokensAsync(Guid userId) {
             const string command = "SELECT * " +
                                    "FROM [Identity].UserTokens " +
                                    "WHERE UserId = @UserId;";

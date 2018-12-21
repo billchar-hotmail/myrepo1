@@ -9,10 +9,15 @@ namespace AspNetCore.Identity.Dapper
     {
         public ApplicationUser()
         {
-            Id = Guid.NewGuid().ToString("N");
+            Id = RT.Comb.Provider.Sql.Create();
+
+            Claims = new List<Claim>();
+            Roles = new List<UserRole>();
+            Logins = new List<UserLoginInfo>();
+            Tokens = new List<UserToken>();
         }
 
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string UserName { get; set; }
         public string NormalizedUserName { get; set; }
         public string Email { get; set; }

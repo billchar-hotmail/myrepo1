@@ -83,10 +83,13 @@ namespace AspNetCore.Identity.Dapper
                                    "FROM [Identity].Users " +
                                    "WHERE NormalizedUserName = @NormalizedUserName;";
 
-            using (var sqlConnection = await _databaseConnectionFactory.CreateConnectionAsync()) {
-                return await sqlConnection.QuerySingleOrDefaultAsync<ApplicationUser>(command, new {
+            using (var sqlConnection = await _databaseConnectionFactory.CreateConnectionAsync())
+            {
+                var user = await sqlConnection.QuerySingleOrDefaultAsync<ApplicationUser>(command, new
+                {
                     NormalizedUserName = normalizedUserName
                 });
+                return user;
             }
         }
 

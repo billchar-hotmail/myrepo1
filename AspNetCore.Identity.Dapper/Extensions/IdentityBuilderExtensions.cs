@@ -1,5 +1,6 @@
 ﻿/*
  * The following code is inspired from https://github.com/aspnet/Identity/blob/master/src/EF/IdentityEntityFrameworkBuilderExtensions.cs
+ * and https://github.com/giorgos07/Daarto
  */
 
 using Microsoft.AspNetCore.Identity;
