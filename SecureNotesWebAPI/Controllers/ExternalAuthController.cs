@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using SecureNotesWebAPI.Auth;
-using SecureNotesWebAPI.Data;
 using SecureNotesWebAPI.Helpers;
 using SecureNotesWebAPI.Models;
 using SecureNotesWebAPI.Models.Entities;
@@ -73,8 +72,8 @@ namespace SecureNotesWebAPI.Controllers
 
                 if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
-                await _appDbContext.Customers.AddAsync(new Customer { IdentityId = appUser.Id, Location = "", Locale = userInfo.Locale, Gender = userInfo.Gender });
-                await _appDbContext.SaveChangesAsync();
+                //await _appDbContext.Customers.AddAsync(new Customer { IdentityId = appUser.Id, Location = "", Locale = userInfo.Locale, Gender = userInfo.Gender });
+                //await _appDbContext.SaveChangesAsync();
             }
 
             // generate the jwt for the local user...

@@ -27,6 +27,24 @@ namespace SecureNotesWebAPI.Controllers
             _jwtOptions = jwtOptions.Value;
         }
 
+        [HttpGet("login")]
+        public async Task<IActionResult> Get(CredentialsViewModel credentials)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var identity = await GetClaimsIdentity(credentials.UserName, credentials.Password);
+            if (identity == null)
+            {
+                return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid username or password.", ModelState));
+            }
+
+            var jwt = await Tokens.GenerateJwt(identity, _jwtFactory, credentials.UserName, _jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });
+            return new OkObjectResult(jwt);
+        }
+
         // POST api/auth/login
         [HttpPost("login")]
         public async Task<IActionResult> Post([FromBody]CredentialsViewModel credentials)

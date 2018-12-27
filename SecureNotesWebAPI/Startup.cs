@@ -9,15 +9,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebSockets.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
-using SecureNotesWebAPI.Data;
 using SecureNotesWebAPI.Helpers;
 using SecureNotesWebAPI.Services;
+using SecureNotesWebAPI.Models;
+using SecureNotesWebAPI.Auth;
 
 namespace SecureNotesWebAPI
 {

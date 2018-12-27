@@ -1,10 +1,10 @@
 ﻿
 using SecureNotesWebAPI.ViewModels.Validations;
-using FluentValidation.Attributes;
+//using FluentValidation.Attributes;
 
 namespace SecureNotesWebAPI.ViewModels
 {
-    [Validator(typeof(CredentialsViewModelValidator))]
+    //[Validator(typeof(CredentialsViewModelValidator))]
     public class CredentialsViewModel
     {
         public string UserName { get; set; }

@@ -4,7 +4,6 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
-using SecureNotesWebAPI.Data;
 using SecureNotesWebAPI.Models;
 
 namespace SecureNotesWebAPI.Auth
