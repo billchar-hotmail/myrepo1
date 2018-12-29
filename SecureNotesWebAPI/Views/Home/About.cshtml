@@ -5,3 +5,10 @@
 <h3>@ViewData["Message"]</h3>
 
 <p>Use this area to provide additional information.</p>
+
+<form action="/api/auth/login" method="post">
+    <input type="hidden" name="UserName" value="bill@email.com" />
+    <input type="hidden" name="Password" value="test" />
+    <input type="submit" value="Submit" />
+</form>
+

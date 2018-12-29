@@ -7,19 +7,20 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
-
+using AspNetCore.Identity.Dapper;
 
 namespace SecureNotesWebAPI.Controllers
 {
-    [Authorize(Policy = "ApiUser")]
+    //   [Authorize(Policy = "ApiUser")]
+    //[Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize]
     [Route("api/[controller]/[action]")]
     public class DashboardController : Controller
     {
         private readonly ClaimsPrincipal _caller;
         //private readonly ApplicationDbContext _appDbContext;
 
-        public DashboardController(UserManager<AppUser> userManager, IHttpContextAccessor httpContextAccessor) //, ApplicationDbContext appDbContext)
+        public DashboardController(UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor) //, ApplicationDbContext appDbContext)
         {
             _caller = httpContextAccessor.HttpContext.User;
             //_appDbContext = appDbContext;
@@ -37,6 +38,7 @@ namespace SecureNotesWebAPI.Controllers
             return new OkObjectResult(new
             {
                 Message = "This is secure API and user data!",
+                Id = userId.Value,
                 FirstName = User.Identity.Name
             });
 

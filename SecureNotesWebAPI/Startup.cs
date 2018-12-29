@@ -18,6 +18,8 @@ using SecureNotesWebAPI.Helpers;
 using SecureNotesWebAPI.Services;
 using SecureNotesWebAPI.Models;
 using SecureNotesWebAPI.Auth;
+using Microsoft.AspNetCore.Identity;
+using AspNetCore.Identity.Dapper;
 
 namespace SecureNotesWebAPI
 {
@@ -41,6 +43,15 @@ namespace SecureNotesWebAPI
             services.Configure<AppSettings>(appSettingsSection);
             var appSettings = appSettingsSection.Get<AppSettings>();
 
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddUserManager<UserManager<ApplicationUser>>()
+                .AddRoleManager<RoleManager<ApplicationRole>>()
+                .AddSignInManager<SignInManager<ApplicationUser>>()
+                .AddDapperStores(connectionString)
+                .AddDefaultTokenProviders();
+
             // Configure JwtIssuerOptions
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             SecurityKey _signingKey = new SymmetricSecurityKey(key);
@@ -52,24 +63,18 @@ namespace SecureNotesWebAPI
                 options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
             });
 
-            services.AddCors();
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddJsonOptions(setupAction =>
-                {
-                    // Configure the contract resolver that is used when serializing .NET objects to JSON and vice versa.
-                    setupAction.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                });
-
             // configure jwt authentication
+            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
             services.AddAuthentication(options =>
             {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false;
+                x.IncludeErrorDetails = true;
                 x.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
@@ -95,9 +100,35 @@ namespace SecureNotesWebAPI
                options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
             });
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = false; // true
+                options.Password.RequiredLength = 4; // 6;
+                options.Password.RequireNonAlphanumeric = false; // true;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false; // true;
+                options.Password.RequiredUniqueChars = 1;
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 6;
+                options.Lockout.AllowedForNewUsers = true;
+                // User settings.
+                options.User.RequireUniqueEmail = true;
+            });
+
             services.AddSingleton<IJwtFactory, JwtFactory>();
 
-            // configure DI for application services
+            services.AddCors();
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(setupAction =>
+                {
+                    // Configure the contract resolver that is used when serializing .NET objects to JSON and vice versa.
+                    setupAction.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });
+
+            //// configure DI for application services
             services.AddScoped<IUserService, UserService>();
         }
 
