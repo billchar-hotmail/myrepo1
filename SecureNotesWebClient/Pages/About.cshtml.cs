@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace SecureNotesWebClient.Pages
 {
-    //[Authorize]
+    [Authorize]
     public class AboutModel : PageModel
     {
         public string Message { get; set; }
@@ -15,6 +15,8 @@ namespace SecureNotesWebClient.Pages
         public void OnGet()
         {
             Message = "Your application description page.";
+            var s = User.Identity.Name;
+            var s2 = s + "1";
         }
     }
 }

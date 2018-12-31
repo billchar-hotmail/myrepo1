@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AspNetCore.Identity.Dapper;
+using System;
+using System.Collections.Generic;
 
 namespace SecureNotesWebAPI.Controllers
 {
@@ -35,11 +37,17 @@ namespace SecureNotesWebAPI.Controllers
             var userId = _caller.Claims.Single(c => c.Type == "id");
             //var customer = await _appDbContext.Customers.Include(c => c.Identity).SingleAsync(c => c.Identity.Id == userId.Value);
 
+            var claims = new List<string>();
+            foreach (var claim in _caller.Claims)
+                claims.Add(claim.Type + ":" + claim.Value.ToString());
+
             return new OkObjectResult(new
             {
                 Message = "This is secure API and user data!",
                 Id = userId.Value,
-                FirstName = User.Identity.Name
+                FirstName = User.Identity.Name,
+                TimeStamp = DateTime.Now.ToLongDateString() + " " + DateTime.Now.ToLongTimeString(),
+                UserClaims = claims
             });
 
             //return new OkObjectResult(new
