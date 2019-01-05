@@ -15,10 +15,17 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
+    <Folder Include="wwwroot\lib\bootstrap\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\AspNetCore.Identity.Dapper\AspNetCore.Identity.Dapper.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\Test.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>
