@@ -111,6 +111,16 @@ namespace SecureNotesWebClient
             //    UserName = Configuration["SmtpSettings:UserName"]
             //}));
 
+            services.AddAuthentication()
+                .AddGoogle("Google", options =>
+                {
+                    options.SignInScheme = "google.external"; //"idsrv.external";// IdentityServerConstants.ExternalCookieAuthenticationScheme;
+
+                    options.ClientId = "448832310229-cd23f2bh45eijne91b1vivt983l9org6.apps.googleusercontent.com";
+                    options.ClientSecret = "dttRxVHjtmy0d0UIDG2-ZQIG";
+                });
+
+
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(setupAction => {
