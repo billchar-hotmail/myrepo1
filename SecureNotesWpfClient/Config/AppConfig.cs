@@ -20,7 +20,7 @@ namespace SecureNotesWpfClient
         {
             // DbFilename = System.Reflection.Assembly.GetEntryAssembly().Location + "\\Settings\\UserSettings\\data.db";
             //DbFilename = "c:\\temp\\data.db";
-            DbFilename = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + "\\SecureNotes\\data.db";
+            DbFilename = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\SecureNotes\\data.db";
             HostServer = "localhost";
 
             var regKey = Registry.LocalMachine.OpenSubKey(@"Software\CharboTech\SecureNotes");

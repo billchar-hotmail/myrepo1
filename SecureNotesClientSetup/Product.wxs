@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"><?define SecureNotesWpfClient_TargetDir=$(var.SecureNotesWpfClient.TargetDir)?>
+	<Product Id="*" Name="SecureNotes" Language="1033" Version="1.0.0.0" Manufacturer="CharboTech" UpgradeCode="dae8406a-11f4-4597-a0f3-e7a9e1ea0c7d">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="SecureNotes" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="SecureNotes" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<!-- <Component Id="ProductComponent"> -->
+				<!-- TODO: Insert files, registry keys, and other resources here. -->
+			<!-- </Component> -->
+			<Component Id="SecureNotesWpfClient.exe" Guid="f6ff8e81-5c79-45cc-adc9-afb7e3a1bc98">
+			  <File Id="SecureNotesWpfClient.exe" Name="SecureNotesWpfClient.exe" Source="$(var.SecureNotesWpfClient_TargetDir)SecureNotesWpfClient.exe" />
+			</Component>
+			<Component Id="SecureNotesWpfClient.exe.config" Guid="49e582d2-ed12-4c26-b53d-33a6984b83f2">
+			  <File Id="SecureNotesWpfClient.exe.config" Name="SecureNotesWpfClient.exe.config" Source="$(var.SecureNotesWpfClient_TargetDir)SecureNotesWpfClient.exe.config" />
+			</Component>
+			<Component Id="System.Data.SQLite.dll" Guid="9a2ce3a1-4959-47bb-bf91-055912f27ad1">
+			  <File Id="System.Data.SQLite.dll" Name="System.Data.SQLite.dll" Source="$(var.SecureNotesWpfClient_TargetDir)System.Data.SQLite.dll" />
+			</Component>
+			<Component Id="System.Net.Http.Formatting.dll" Guid="2740f21d-9298-43c0-959d-431077495881">
+			  <File Id="System.Net.Http.Formatting.dll" Name="System.Net.Http.Formatting.dll" Source="$(var.SecureNotesWpfClient_TargetDir)System.Net.Http.Formatting.dll" />
+			</Component>
+			<Component Id="Newtonsoft.Json.dll" Guid="d15644f2-2297-4eca-92ca-de490e21e4c2">
+			  <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.SecureNotesWpfClient_TargetDir)Newtonsoft.Json.dll" />
+			</Component>
+
+		</ComponentGroup>
+	</Fragment>
+</Wix>
